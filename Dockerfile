@@ -1,11 +1,13 @@
 FROM ubuntu:latest
-MAINTAINER Tuan Thai "tuanthai@example.com"
+MAINTAINER Dat Le "luapisnothere23@gmail.com"
 RUN apt update -y
-RUN apt install -y python3-pip python3-dev build-essential
+RUN apt install -y python3-pip python3-dev python3-venv build-essential
 ADD . /flask_app
 WORKDIR /flask_app
-RUN /env/bin/python -m pip install requirements.txt
-ENTRYPOINT ["python3"]
+RUN python3 -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
+RUN pip3 install -r requirements.txt
+ENTRYPOINT ["/opt/venv/bin/python3"]
 CMD ["flask_docker.py"]
 
 
